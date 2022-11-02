@@ -1,0 +1,48 @@
+@baseUrl = http://localhost:3001/
+# @baseUrl = http://huort.com:10007/
+
+GET {{baseUrl}}
+
+#### 
+
+POST {{baseUrl}}register
+Content-Type: application/json
+
+{
+    "email": "louis@huort.com",
+    "password": "test123",
+    "univUsername": "test"
+}
+
+####
+POST {{baseUrl}}login
+Content-Type: application/json
+
+{
+    "email": "louis@huort.com",
+    "password": "test123"
+}
+
+####
+GET {{ baseUrl }}have-admin
+
+####
+
+@auth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJsb3Vpc0BodW9ydC5jb20iLCJpYXQiOjE2NjczOTc2MjksImV4cCI6MTY2ODI2MTYyOX0.cT0zSXme-ag3FMkR8uepc6K_pK3dO8fEKxbqto7Rikc
+
+####
+POST {{baseUrl}}delete-account
+Authorization: Bearer {{ auth }}
+
+#### 
+GET {{ baseUrl }}multiple-users
+
+
+#### 
+POST {{ baseUrl }}multiple-users
+Authorization: Bearer {{ auth }}
+Content-Type: application/json
+
+{
+    "multipleUsers": "false"
+}

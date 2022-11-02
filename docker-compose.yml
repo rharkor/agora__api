@@ -1,0 +1,22 @@
+version: "3"
+services:
+  # api:
+  #   build:
+  #     context: ./server
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "10007:3001"
+  #   depends_on:
+  #     - postgres
+  #   restart: unless-stopped
+  postgres:
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: basic
+      POSTGRES_PASSWORD: hokHgpqz8jysf
+      POSTGRES_DB: agora
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
