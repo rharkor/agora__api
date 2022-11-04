@@ -32,7 +32,7 @@ router.post("/subscribe", checkTokenMiddleware, async (req, res) => {
     ) {
       // console.log("update");
       await client.query(
-        `UPDATE notifications SET subscription_endpoint = $1, subscriptions_keys = $2`,
+        `UPDATE notifications SET subscription_endpoint = $1, subscription_keys = $2`,
         [subscription.endpoint, JSON.stringify(subscription.keys)]
       );
     } else {
