@@ -6,6 +6,4 @@ services:
       dockerfile: Dockerfile
     ports:
       - "10008:3001"
-    depends_on:
-      - postgres
     restart: unless-stopped
