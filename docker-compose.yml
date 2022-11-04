@@ -9,12 +9,3 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
-  postgres:
-    volumes:
-      - ./db:/var/lib/postgresql/data
-    image: postgres:9.6.2-alpine
-    environment:
-      POSTGRES_USER: basic
-      POSTGRES_PASSWORD: hokHgpqz8jysf
-      POSTGRES_DB: agora
-    restart: unless-stopped

@@ -28,8 +28,8 @@ jobs:
           touch .env
           echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .env
           echo DATABASE_USER=basic >> .env
-          echo DATABASE_HOST=postgres >> .env
-          echo DATABASE_PORT=5432 >> .env
+          echo DATABASE_HOST=localhost >> .env
+          echo DATABASE_PORT=10013 >> .env
           echo DATABASE_NAME=agora >> .env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
           echo VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }} >> .env
