@@ -71,9 +71,7 @@ router.post("/notify-all", checkTokenMiddleware, async (req, res) => {
     );
 
     const payload = JSON.stringify({
-      title,
-      description,
-      icon,
+      ...req.body,
     });
 
     for (user of allSubscribers.rows) {
