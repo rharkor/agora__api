@@ -23,4 +23,5 @@ jobs:
     steps:
       - name: Run the prod docker-compose
         run: |
+          ls
           docker-compose up --build -d
