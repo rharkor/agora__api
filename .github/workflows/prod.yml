@@ -24,6 +24,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run the prod docker-compose
+        env:
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
           touch .env
           echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .env
