@@ -28,13 +28,13 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
-          touch .env
-          echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .env
-          echo DATABASE_USER=basic >> .env
-          echo DATABASE_HOST=localhost >> .env
-          echo DATABASE_PORT=10013 >> .env
-          echo DATABASE_NAME=agora >> .env
-          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
-          echo VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }} >> .env
-          echo VAPID_PUBLIC_KEY=BGIz7gLeHDXxdt7TkmRCUT-jK9U28FC7DHHBDJoi841yPVdTuKUKf6H7vpWR3UUfWA-YqrmDTijUVDSHA3YuJ0Q >> .env
+          touch server/.env
+          echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> server/.env
+          echo DATABASE_USER=basic >> server/.env
+          echo DATABASE_HOST=localhost >> server/.env
+          echo DATABASE_PORT=10013 >> server/.env
+          echo DATABASE_NAME=agora >> server/.env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> server/.env
+          echo VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }} >> server/.env
+          echo VAPID_PUBLIC_KEY=BGIz7gLeHDXxdt7TkmRCUT-jK9U28FC7DHHBDJoi841yPVdTuKUKf6H7vpWR3UUfWA-YqrmDTijUVDSHA3YuJ0Q >> server/.env
           docker-compose up --build -d
