@@ -36,6 +36,7 @@ const checkTokenMiddleware = (req, res, next) => {
         return;
       }
       req.body.id = decodedToken.id;
+      req.body.email = decodedToken.email;
       return next();
     }
   });

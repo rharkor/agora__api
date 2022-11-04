@@ -18,7 +18,7 @@ const connect = async () => {
           password TEXT NOT NULL,
           admin BOOL NOT NULL
       );`);
-    await client.query(`CREATE TABLE IF NOT exists info(
+    await client.query(`CREATE TABLE IF NOT EXISTS info(
       onerow_id bool PRIMARY KEY DEFAULT TRUE,
       multipleusers BOOL NOT NULL,
       CONSTRAINT onerow_uni CHECK (onerow_id)
@@ -26,6 +26,14 @@ const connect = async () => {
     try {
       await client.query(`INSERT INTO info(multipleusers) VALUES (false)`);
     } catch (e) {}
+    await client.query(`CREATE TABLE IF NOT EXISTS notifications(
+      id SERIAL PRIMARY KEY,
+      user_id INT UNIQUE,
+      subscription_endpoint text,
+      subscription_keys text,
+      basic_notification BOOL,
+      constraint fk_user foreign key(user_id) references users(id)
+    );`);
   } catch (e) {
     console.error(e);
     process.exit(1);

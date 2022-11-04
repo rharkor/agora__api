@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3001/
-@baseUrl = https://agora-api.yetixdev.com/
+# @baseUrl = https://agora-api.yetixdev.com/
 
 GET {{baseUrl}}
 
@@ -28,7 +28,7 @@ GET {{ baseUrl }}have-admin
 
 ####
 
-@auth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJsb3Vpc0BodW9ydC5jb20iLCJpYXQiOjE2NjczOTc2MjksImV4cCI6MTY2ODI2MTYyOX0.cT0zSXme-ag3FMkR8uepc6K_pK3dO8fEKxbqto7Rikc
+@auth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJsb3Vpc0BodW9ydC5jb20iLCJpYXQiOjE2Njc1NjU5MjcsImV4cCI6MTY2ODg2MTkyN30.YbFsgsnWcbuzoNHqLEmHUvy0eUAqCj6tAKwXlGzSZV0
 
 ####
 POST {{baseUrl}}delete-account
@@ -45,4 +45,15 @@ Content-Type: application/json
 
 {
     "multipleUsers": "false"
+}
+
+####
+POST {{ baseUrl }}notifications/notify-all
+Authorization: Bearer {{ auth }}
+Content-Type: application/json
+
+{
+    "title": "Test de notif titre",
+    "description": "Une description banale",
+    "icon": "https://ichef.bbci.co.uk/news/976/cpsprodpb/9A50/production/_118740593_gettyimages-1231144196.jpg"
 }
