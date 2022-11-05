@@ -34,6 +34,16 @@ const connect = async () => {
       basic_notification BOOL,
       constraint fk_user foreign key(user_id) references users(id)
     );`);
+    try {
+      await client.query(
+        `alter table notifications drop constraint notifications_user_id_key;`
+      );
+    } catch (e) {}
+    await client.query(
+      `alter table users
+add column if not exists calendar_access bool not null default false,
+add column if not exists megasql_access bool not null default false;`
+    );
   } catch (e) {
     console.error(e);
     process.exit(1);

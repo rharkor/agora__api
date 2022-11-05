@@ -24,6 +24,10 @@ router.get("/have-admin", async (req, res) => {
   return res.send({ haveAdmin: await haveAdmin() });
 });
 
+router.get("/connected", checkTokenMiddleware, (req, res) =>
+  res.json({ status: "success" })
+);
+
 router.post("/login", async (req, res) => {
   try {
     if (!req.body.email || !req.body.password) {
@@ -137,6 +141,10 @@ router.post("/update-account", checkTokenMiddleware, async (req, res) => {
       });
     }
 
+    if (req.body.password.length < 8) {
+      throw "Password must be at least of 8 characters";
+    }
+
     const result = await client.query(
       "UPDATE users SET email = $1, univUsername = $2, password = crypt($3, gen_salt('bf', 8)) WHERE email = lower($4) AND password = crypt($5, password) RETURNING id;",
       [
@@ -190,6 +198,9 @@ router.post("/delete-account", checkTokenMiddleware, async (req, res) => {
         error: "Can't identify you",
       });
     }
+    await client.query(`DELETE FROM notifications WHERE user_id = $1`, [
+      req.body.id,
+    ]);
     await client.query("DELETE FROM users WHERE users.id = $1", [req.body.id]);
     return res.send({
       status: "success",
