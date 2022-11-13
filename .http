@@ -2,8 +2,8 @@
 @auth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiZW1haWwiOiJsb3Vpc0BodW9ydC5jb20iLCJpYXQiOjE2Njc1ODMyMDUsImV4cCI6MTY2ODg3OTIwNX0.xo9pCZXFg7yo8kqNZD8vdHGc_bfLPW9_7ty5fEZvgnE
 
 
-# @baseUrl = https://agora-api.yetixdev.com/
-# @auth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsb3Vpc0BodW9ydC5jb20iLCJpYXQiOjE2Njc1NzA5NTgsImV4cCI6MTY2ODg2Njk1OH0.ALcGrgLovupKR_B9es9boPNQC9ZFAxfG3GoFJVvmvwU
+@baseUrl = https://agora-api.yetixdev.com/
+@auth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsb3Vpc0BodW9ydC5jb20iLCJpYXQiOjE2Njc1NzA5NTgsImV4cCI6MTY2ODg2Njk1OH0.ALcGrgLovupKR_B9es9boPNQC9ZFAxfG3GoFJVvmvwU
 
 
 GET {{baseUrl}}
@@ -56,14 +56,27 @@ Content-Type: application/json
 }
 
 ####
-POST {{ baseUrl }}notifications/notify-all
+# POST {{ baseUrl }}notifications/notify-all
+# Authorization: Bearer {{ auth }}
+# Content-Type: application/json
+
+# {
+#     "title": "Test de notif titre",
+#     "description": "Une description banale",
+#     "icon": "https://ichef.bbci.co.uk/news/976/cpsprodpb/9A50/production/_118740593_gettyimages-1231144196.jpg"
+# }
+
+
+####
+POST {{ baseUrl }}notifications/notify-user
 Authorization: Bearer {{ auth }}
 Content-Type: application/json
 
 {
     "title": "Test de notif titre",
     "description": "Une description banale",
-    "icon": "https://ichef.bbci.co.uk/news/976/cpsprodpb/9A50/production/_118740593_gettyimages-1231144196.jpg"
+    "icon": "https://ichef.bbci.co.uk/news/976/cpsprodpb/9A50/production/_118740593_gettyimages-1231144196.jpg",
+    "user": 1
 }
 
 
@@ -76,4 +89,66 @@ Authorization: Bearer {{ auth }}
 GET {{ baseUrl }}admin/get-users
 Authorization: Bearer {{ auth }}
 
+####
+GET {{ baseUrl }}megasql/projects
+Authorization: Bearer {{ auth }}
 
+
+####
+GET {{ baseUrl }}megasql/db-user
+Authorization: Bearer {{ auth }}
+
+####
+POST {{ baseUrl }}megasql/new-project
+Authorization: Bearer {{ auth }}
+Content-Type: application/json
+
+{
+    "name": "le_gouroux",
+    "password": "test123"
+}
+
+
+####
+POST {{ baseUrl }}megasql/delete-project
+Authorization: Bearer {{ auth }}
+Content-Type: application/json
+
+{
+    "name": "le_gouroux"
+}
+
+#### Get the tables
+GET {{ baseUrl }}megasql/project/le_gouroux
+Authorization: Bearer {{ auth }}
+
+
+#### Create table
+PUT {{ baseUrl }}megasql/project/le_gouroux
+Authorization: Bearer {{ auth }}
+Content-Type: application/json
+
+{
+    
+}
+
+#### Delete table
+
+
+#### Get rows of table
+GET {{ baseUrl }}megasql/project/le_gouroux/newtable?page=0
+Authorization: Bearer {{ auth }}
+
+
+#### Add row
+PUT {{ baseUrl }}megasql/project/le_gouroux/newtable
+Authorization: Bearer {{ auth }}
+Content-Type: application/json
+
+{
+    "rows": [
+        {
+            "column1": "wow"
+        }
+    ]
+}

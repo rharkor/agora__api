@@ -1,4 +1,4 @@
-const { Client } = require("pg");
+const { Client, Pool } = require("pg");
 const client = new Client({
   user: process.env.DATABASE_USER,
   host: process.env.DATABASE_HOST,
@@ -6,6 +6,16 @@ const client = new Client({
   password: process.env.DATABASE_PASSWORD,
   port: process.env.DATABASE_PORT,
 });
+
+const getPoolDatabase = (database) => {
+  return new Pool({
+    user: process.env.DATABASE_USER,
+    host: process.env.DATABASE_HOST,
+    database: database,
+    password: process.env.DATABASE_PASSWORD,
+    port: process.env.DATABASE_PORT,
+  });
+};
 
 const connect = async () => {
   try {
@@ -53,4 +63,5 @@ add column if not exists megasql_access bool not null default false;`
 module.exports = {
   connect,
   client,
+  getPoolDatabase,
 };

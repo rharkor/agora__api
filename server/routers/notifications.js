@@ -104,4 +104,68 @@ router.post(
   }
 );
 
+router.post(
+  "/notify-user",
+  checkTokenMiddleware,
+  isAdminMiddleware,
+  async (req, res) => {
+    try {
+      const { title, description, icon, user } = req.body;
+
+      if (!title || !description || !icon || !user) {
+        throw "Please specify a user, title, a description and an icon url";
+      }
+
+      const subscriber = await client.query(
+        `SELECT * FROM notifications WHERE basic_notification = true AND user_id = $1`, [user]
+      );
+
+      const payload = JSON.stringify({
+        ...req.body,
+      });
+
+      const allPromises = [];
+      const toClean = [];
+      subscriber.rows.forEach((userSubscription) => {
+        const subscription = {
+          endpoint: userSubscription.subscription_endpoint,
+          keys: JSON.parse(userSubscription.subscription_keys),
+          expirationTime: null,
+        };
+        allPromises.push(
+          webpush
+            .sendNotification(subscription, payload)
+            .then((result) => console.log("notified:", userSubscription.id))
+            .catch((e) => {
+              if (
+                e.body === "push subscription has unsubscribed or expired.\n"
+              ) {
+                toClean.push(userSubscription);
+              } else {
+                console.log(e);
+              }
+            })
+        );
+      });
+
+      console.log("send notifications");
+      await Promise.all(allPromises);
+      console.log("cleaning up old notifications");
+      const cleanAsString = toClean.reduce(
+        (old, subscription) => (old += ` OR id = ${subscription.id}`),
+        "FALSE"
+      );
+      await client.query(`DELETE FROM notifications WHERE ${cleanAsString}`);
+
+      return res.json({ status: "success" });
+    } catch (e) {
+      console.error(e);
+      return res.status(401).send({
+        status: "failed",
+        error: e.toString(),
+      });
+    }
+  }
+);
+
 module.exports = router;

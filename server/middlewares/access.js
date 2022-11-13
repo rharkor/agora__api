@@ -28,6 +28,15 @@ const checkAccessMiddleware = async (req, res, next) => {
     }
   }
 
+  if (req.originalUrl.match(/\/megasql.*/)) {
+    const haveAccess = user["megasql_access"];
+    if (!haveAccess) {
+      return res
+        .status(401)
+        .json({ status: "error", error: "You can't access this module" });
+    }
+  }
+
   return next();
 };
 
