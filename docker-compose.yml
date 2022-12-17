@@ -7,9 +7,4 @@ services:
     ports:
       - "10008:3001"
     restart: unless-stopped
-    networks:
-      - dbnet
-networks:
-  dbnet:
-    external:
-      name: dbnet
+    network_mode: host
