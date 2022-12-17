@@ -7,5 +7,9 @@ services:
     ports:
       - "10008:3001"
     restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    networks:
+      - my-proxy-net
+networks:
+  dbnet:
+    external:
+      name: dbnet
