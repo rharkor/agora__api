@@ -8,4 +8,4 @@ services:
       - "10008:3001"
     restart: unless-stopped
     extra_hosts: 
-      - host.docker.internal:host-gateway
+      - "host.docker.internal:host-gateway"
