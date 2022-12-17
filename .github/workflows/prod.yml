@@ -31,7 +31,7 @@ jobs:
           touch server/.env
           echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> server/.env
           echo DATABASE_USER=basic >> server/.env
-          echo DATABASE_HOST=127.0.0.1 >> server/.env
+          echo DATABASE_HOST=host.docker.internal >> server/.env
           echo DATABASE_PORT=10013 >> server/.env
           echo DATABASE_NAME=agora >> server/.env
           echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> server/.env
